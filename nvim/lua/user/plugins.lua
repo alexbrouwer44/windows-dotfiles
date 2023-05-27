@@ -58,7 +58,6 @@ use({
     vim.api.nvim_set_hl(0, 'IndentBlanklineChar', { fg = '#2F313C' })
   end,
 })
-
 -- Commenting support.
 use('tpope/vim-commentary')
 
@@ -355,7 +354,7 @@ use({
 use({
   'lewis6991/gitsigns.nvim',
   config = function()
-    require('gitsigns').setup()
+    require('gitsigns').setup({current_line_blame = true})
     vim.keymap.set('n', ']h', ':Gitsigns next_hunk<CR>')
     vim.keymap.set('n', '[h', ':Gitsigns prev_hunk<CR>')
     vim.keymap.set('n', 'gs', ':Gitsigns stage_hunk<CR>')
@@ -370,8 +369,111 @@ use({
   'tpope/vim-fugitive',
   requires = 'tpope/vim-rhubarb',
 })
+
+--- Floating terminal.
+use({
+  'voldikss/vim-floaterm',
+  config = function()
+    vim.g.floaterm_width = 0.8
+    vim.g.floaterm_height = 0.8
+    vim.keymap.set('n', '<F1>', ':FloatermToggle<CR>')
+    vim.keymap.set('t', '<F1>', '<C-\\><C-n>:FloatermToggle<CR>')
+    vim.cmd([[
+      highlight link Floaterm CursorLine
+      highlight link FloatermBorder CursorLineBg
+    ]])
+  end
+})
+
+-- Improved syntax highlighting
+use({
+  'nvim-treesitter/nvim-treesitter',
+  run = function()
+    require('nvim-treesitter.install').update({ with_sync = true })
+  end,
+  requires = {
+    'JoosepAlviste/nvim-ts-context-commentstring',
+    'nvim-treesitter/nvim-treesitter-textobjects',
+  },
+  config = function()
+    require('nvim-treesitter.configs').setup({
+	  ensure_installed = 'all',
+	  highlight = {
+		enable = true,
+		additional_vim_regex_highlighting = true,
+	  },
+	  context_commentstring = {
+		enable = true,
+	  },
+	  textobjects = {
+		select = {
+		  enable = true,
+		  lookahead = true,
+		  keymaps = {
+			['if'] = '@function.inner',
+			['af'] = '@function.outer',
+			['ia'] = '@parameter.inner',
+			['aa'] = '@parameter.outer',
+		  },
+		}
+	  }
+	})
+  end,
+})
+
+-- Language Server Protocol.
+use({
+  'neovim/nvim-lspconfig',
+  requires = {
+    {'williamboman/mason.nvim', build = ":MasonUpdate"},
+    'williamboman/mason-lspconfig.nvim',
+  },
+  config = function()
+    -- Setup Mason to automatically install LSP servers
+	require('mason').setup()
+	require('mason-lspconfig').setup({ automatic_installation = true })
+
+	-- PHP
+	require('lspconfig').intelephense.setup({})
+
+	-- Vue, JavaScript, TypeScript
+	require('lspconfig').volar.setup({
+	  -- Enable "Take Over Mode" where volar will provide all JS/TS LSP services
+	  -- This drastically improves the responsiveness of diagnostic updates on change
+	  filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+	})
+
+	-- Tailwind CSS
+	require('lspconfig').tailwindcss.setup({})
+
+	-- Keymaps
+	vim.keymap.set('n', '<Leader>d', '<cmd>lua vim.diagnostic.open_float()<CR>')
+	vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
+	vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>')
+	vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
+	vim.keymap.set('n', 'gi', ':Telescope lsp_implementations<CR>')
+	vim.keymap.set('n', 'gr', ':Telescope lsp_references<CR>')
+	vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
+	vim.keymap.set('n', '<Leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>')
+
+	-- Diagnostic configuration
+	vim.diagnostic.config({
+	  virtual_text = false,
+	  float = {
+		source = true,
+	  }
+	})
+
+	-- Sign configuration
+	vim.fn.sign_define('DiagnosticSignError', { text = '', texthl = 'DiagnosticSignError' })
+	vim.fn.sign_define('DiagnosticSignWarn', { text = '', texthl = 'DiagnosticSignWarn' })
+	vim.fn.sign_define('DiagnosticSignInfo', { text = '', texthl = 'DiagnosticSignInfo' })
+	vim.fn.sign_define('DiagnosticSignHint', { text = '', texthl = 'DiagnosticSignHint' })
+  end,
+})
+
 -- Automatically set up your configuration after cloning packer.nvim
--- Put this at the end after all plugins
+-- Put this at the Spawning language server with cmd: `intelephense` failed. The language server is either not installed, missing from PATH, or not executable.end after all plugins
 if packer_bootstrap then
     require('packer').sync()
 end

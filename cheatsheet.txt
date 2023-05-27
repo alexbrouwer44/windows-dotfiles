@@ -1,0 +1,35 @@
+# GENERAL
+;; or ,,			inserts trailing symbol
+space + k			clears hightlight
+space + x			open file in os program
+alt + j|k			move line up and down
+F1					toggle ad hoc terminal
+
+# TELESCOPE
+space + f			find files
+space + F			find any file
+space + b			list current buffers
+space + g			find text in any file
+space + h			list buffer history
+space + s			show lsp info?
+space + n			show file tree:w
+space + q			close buffer
+
+# GITHUB
+] + h				next hunk
+[ + h				previous hunk
+g + s				stage hunk
+g + S				undo stage hunk
+g + p				preview hunk
+g + b				git blame
+
+# LSP 
+space + d			open diagnostics info on line
+[ + d				find next diagnostic message
+] + d				find previous diagnostic message
+g + d				go to definition
+g + i				go to implementation
+g + r				find all references
+K					show info dialouge
+space + r + n		rename
+
