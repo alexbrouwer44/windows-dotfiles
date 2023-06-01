@@ -24,6 +24,16 @@ vim.keymap.set('v', 'p', '"_dP')
 vim.keymap.set('i', ';;', '<Esc>A;')
 vim.keymap.set('i', ',,', '<Esc>A,')
 
+-- Arthritis prevention
+vim.keymap.set('n', '<F6>', '_')
+vim.keymap.set('n', '<F7>', '$')
+vim.keymap.set('v', '<F7>', '$')
+vim.keymap.set('v', '<F6>', '_')
+
+-- Center cursor of page nav
+vim.keymap.set('n', '<C-d>', '<C-d>zz')
+vim.keymap.set('n', '<C-u>', '<C-u>zz')
+
 -- Quickly clear search highlighting.
 vim.keymap.set('n', '<Leader>k', ':nohlsearch<CR>')
 

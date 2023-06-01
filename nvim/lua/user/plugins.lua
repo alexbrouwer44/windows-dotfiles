@@ -229,6 +229,9 @@ use({
 	  git = {
 		ignore = false,
 	  },
+	  view = {
+	    width = 70
+	  },
 	  renderer = {
 		group_empty = true,
 		icons = {
@@ -471,7 +474,7 @@ use({
 use({
   'neovim/nvim-lspconfig',
   requires = {
-    {'williamboman/mason.nvim', build = ":MasonUpdate"},
+    'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',
     'b0o/schemastore.nvim',
     'jose-elias-alvarez/null-ls.nvim',
@@ -482,7 +485,7 @@ use({
       require('mason').setup()
       require('mason-lspconfig').setup({ automatic_installation = true })
 
-      local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+      local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
       -- PHP
       require('lspconfig').intelephense.setup({ capabilities = capabilities })
@@ -574,6 +577,8 @@ use({
 	local luasnip = require('luasnip')
 	local lspkind = require('lspkind')
 
+	require('luasnip/loaders/from_snipmate').lazy_load()
+
 	local has_words_before = function()
 	  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
 	  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
@@ -625,8 +630,18 @@ use({
   end,
 })
 
+-- PHP Refactoring Tools
+use({
+  'phpactor/phpactor',
+  ft = 'php',
+  run = 'composer install --no-dev --optimize-autoloader --ignore-platform-reqs',
+  config = function()
+    vim.keymap.set('n', '<Leader>cm', ':PhpactorContextMenu<CR>')
+    vim.keymap.set('n', '<Leader>cn', ':PhpactorClassNew<CR>')
+  end,
+})
+
 -- Automatically set up your configuration after cloning packer.nvim
--- Put this at the Spawning language server with cmd: `intelephense` failed. The language server is either not installed, missing from PATH, or not executable.end after all plugins
 if packer_bootstrap then
     require('packer').sync()
 end

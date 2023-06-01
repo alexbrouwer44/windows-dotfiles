@@ -1,0 +1,45 @@
+snippet pubf "public method"
+	public function ${1}(${2}): $3
+	{
+		${0}
+	}
+
+snippet prof "protected method"
+	protected function ${1}(${2}): $3
+	{
+		${0}
+	}
+
+snippet prif "private method"
+	protected function ${1}(${2}): $3
+	{
+		${0}
+	}
+
+snippet testt "test method (prefix)"
+	it('${1}', function () {
+		${0}
+	})
+
+snippet mkfk "create fk in migration"
+	$$table->unsignedBigInteger('${1}');
+	$$table->index('${1}', '${2}_${1}');
+	$$table->foreign('${1}', '${2}_${1}')
+		->references('id')
+		->on('${3}')
+		->onDelete('${4}');
+
+snippet mkfkstr "create fk in migration with string key"
+	$$table->string('${1}');
+	$$table->index('${1}', '${2}_${1}');
+	$$table->foreign('${1}', '${2}_${1}')
+		->references('id')
+		->on('${3}')
+		->onDelete('${4}');
+
+snippet testa "test method (annotation)"
+	/** @test */
+	public function ${1}()
+	{
+		${0}
+	}

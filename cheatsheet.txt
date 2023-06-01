@@ -4,6 +4,31 @@ space + k			clears hightlight
 space + x			open file in os program
 alt + j|k			move line up and down
 F1					toggle ad hoc terminal
+ctrl + o			jump back
+cntrl + i			jump forward
+: + up				repeat last command
+:wa					save everything
+g + g + V + G		select all
+shift + j			join next line with current line
+shift + a			append to end of line
+shift + i			insert at start of line
+shift + p			paste as new lines
+_					goes to first character in line
+0					goes to start of line
+{					go up by paragraph
+}					go down by paragraph
+cntrl + d			jump half page up
+cntrl + u			jump half page down
+cntrl + q			visual block mode
+V					visual line mode
+
+# DELETING
+number + d + f + search			delete everything until the <number> occurence of <search>
+number + d + d		delete <number> of lines
+d + a + w			delete word under cursor
+shift + d			delete until end of line
+d + ^				delete until cursor
+d + $				delete until end of line
 
 # TELESCOPE
 space + f			find files
@@ -23,7 +48,7 @@ g + S				undo stage hunk
 g + p				preview hunk
 g + b				git blame
 
-# LSP 
+# LSP
 space + d			open diagnostics info on line
 [ + d				find next diagnostic message
 ] + d				find previous diagnostic message
@@ -33,3 +58,42 @@ g + r				find all references
 K					show info dialouge
 space + r + n		rename
 
+# COMMANDS
+Format				format given file with provided language server
+PackerCompile		recompile lua configs
+PackerSync			fetch and update packer packages
+LspInfo				shows active LSP profiles on buffer
+
+# REFACTORING
+space + pm			show context refactor menu
+space + pn			new class
+
+# SEARCH AND REPLACE
+f						jump Forward to character
+F						jump Backward to character
+t						jump forward unTil character
+T						jump back unTil character
+f + search				find <search> in line
+number + f + search		find <number> occurenece of <search>
+:%s/replace/with		replace all in file (will not replace mutiple in one line)
+:%s/replace/with/g		replace all in file in all lines
+:%s/replace/with/c		replace all but confirm for each occurence
+
+* you can chain all these onto an existing text search
+* enter these commands after making visual selection to only search in selected region
+:%g					global
+:%v					invert grep
+
+# QUICK LIST
+:ccl				closes the quick list
+:cdo				operates on results in quick list
+:cfdo				operates on results in files of list
+[ + q				next item in quick list
+] + q				previous item in quick list
+
+# AUTOMATION
+cntrl + a 		increment number under cursor
+cntrl + x		decrement number under cursor
+number + p		paste a numberof times
+action + ;		do thing again forward
+action + ,		do thing again backward
