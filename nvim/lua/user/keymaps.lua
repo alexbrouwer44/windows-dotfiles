@@ -30,9 +30,18 @@ vim.keymap.set('n', '<F7>', '$')
 vim.keymap.set('v', '<F7>', '$')
 vim.keymap.set('v', '<F6>', '_')
 
+-- delete file and close buffer command
+vim.api.nvim_create_user_command('FDelete', ':call delete(expand(\'%\')) | bdelete', {})
+
+-- Pane nav
+vim.keymap.set('n', '<S-F9>', '<C-w><right>')
+vim.keymap.set('n', '<S-F6>', '<C-w><left>')
+vim.keymap.set('n', '<S-F8>', '<C-w><up>')
+vim.keymap.set('n', '<S-F7>', '<C-w><down>')
+
 -- Center cursor of page nav
-vim.keymap.set('n', '<C-d>', '<C-d>zz')
-vim.keymap.set('n', '<C-u>', '<C-u>zz')
+vim.keymap.set('n', '<C-k>', '<C-d>zz')
+vim.keymap.set('n', '<C-i>', '<C-u>zz')
 
 -- Quickly clear search highlighting.
 vim.keymap.set('n', '<Leader>k', ':nohlsearch<CR>')

@@ -57,6 +57,13 @@ g + i				go to implementation
 g + r				find all references
 K					show info dialouge
 space + r + n		rename
+g + D				go to declaration
+cntrl + s			signature help
+space + w + a		add workspace folder
+space + w + r		remove workspace folder
+space + w + l		list workspace folder
+sapce + c + a		list code actions
+F10					format
 
 # COMMANDS
 Format				format given file with provided language server
@@ -97,3 +104,10 @@ cntrl + x		decrement number under cursor
 number + p		paste a numberof times
 action + ;		do thing again forward
 action + ,		do thing again backward
+
+# FILE TREE
+# https://github.com/nvim-tree/nvim-tree.lua/blob/master/doc/nvim-tree-lua.txt 
+a			create new file
+d			delete file
+c			copy
+p			paste

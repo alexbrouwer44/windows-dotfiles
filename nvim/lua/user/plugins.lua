@@ -79,9 +79,6 @@ use('tpope/vim-repeat')
 -- Add more languages.
 use('sheerun/vim-polyglot')
 
--- Navigate seamlessly between Vim windows and Tmux panes.
-use('christoomey/vim-tmux-navigator')
-
 -- Jump to the last location when opening a file.
 use('farmergreg/vim-lastplace')
 
@@ -122,6 +119,14 @@ use({
   'karb94/neoscroll.nvim',
   config = function()
     require('neoscroll').setup()
+    local t = {}
+    -- Syntax: t[keys] = {function, {function arguments}}
+    t['<C-u>'] = {'scroll', {'-vim.wo.scroll', 'true', '250'}}
+    t['<C-d>'] = {'scroll', { 'vim.wo.scroll', 'true', '250'}}
+    t['<C-k>'] = {'scroll', { '-vim.wo.scroll', 'true', '250'}}
+    t['<C-j>'] = {'scroll', { 'vim.wo.scroll', 'true', '250'}}
+
+    require('neoscroll.config').set_mappings(t)
   end,
 })
 
@@ -552,6 +557,31 @@ use({
 	}
       })
 
+    -- Use LspAttach autocommand to only map the following keys
+    -- after the language server attaches to the current buffer
+    vim.api.nvim_create_autocmd('LspAttach', {
+      group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+      callback = function(ev)
+	-- Enable completion triggered by <c-x><c-o>
+	vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+
+	-- Buffer local mappings.
+	-- See `:help vim.lsp.*` for documentation on any of the below functions
+	local opts = { buffer = ev.buf }
+	vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+	vim.keymap.set('n', '<C-s>', vim.lsp.buf.signature_help, opts)
+	vim.keymap.set('n', '<Leader>wa', vim.lsp.buf.add_workspace_folder, opts)
+	vim.keymap.set('n', '<Leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
+	vim.keymap.set('n', '<Leader>wl', function()
+	  print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+	end, opts)
+	vim.keymap.set({ 'n', 'v' }, '<Leader>ca', vim.lsp.buf.code_action, opts)
+	vim.keymap.set('n', '<F10>', function()
+	  vim.lsp.buf.format { async = true }
+	end, opts)
+      end,
+    })
+
       -- Sign configuration
       vim.fn.sign_define('DiagnosticSignError', { text = '', texthl = 'DiagnosticSignError' })
       vim.fn.sign_define('DiagnosticSignWarn', { text = '', texthl = 'DiagnosticSignWarn' })
@@ -630,18 +660,6 @@ use({
   end,
 })
 
--- PHP Refactoring Tools
-use({
-  'phpactor/phpactor',
-  ft = 'php',
-  run = 'composer install --no-dev --optimize-autoloader --ignore-platform-reqs',
-  config = function()
-    vim.keymap.set('n', '<Leader>cm', ':PhpactorContextMenu<CR>')
-    vim.keymap.set('n', '<Leader>cn', ':PhpactorClassNew<CR>')
-  end,
-})
-
--- Automatically set up your configuration after cloning packer.nvim
 if packer_bootstrap then
     require('packer').sync()
 end
