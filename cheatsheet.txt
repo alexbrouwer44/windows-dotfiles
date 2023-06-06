@@ -106,7 +106,7 @@ action + ;		do thing again forward
 action + ,		do thing again backward
 
 # FILE TREE
-# https://github.com/nvim-tree/nvim-tree.lua/blob/master/doc/nvim-tree-lua.txt 
+# https://github.com/nvim-tree/nvim-tree.lua/blob/master/doc/nvim-tree-lua.txt
 a			create new file
 d			delete file
 c			copy

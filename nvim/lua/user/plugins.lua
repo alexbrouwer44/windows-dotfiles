@@ -233,6 +233,7 @@ use({
     require('nvim-tree').setup({
 	  git = {
 		ignore = false,
+		timeout = 1000
 	  },
 	  view = {
 	    width = 70
@@ -443,7 +444,10 @@ use({
 use({
   'nvim-treesitter/nvim-treesitter',
   run = function()
-    require('nvim-treesitter.install').update({ with_sync = true })
+    install = require('nvim-treesitter.install')
+    install.update({ with_sync = true })
+    install.prefer_git = false
+    install.compilers = { "clang"}
   end,
   requires = {
     'JoosepAlviste/nvim-ts-context-commentstring',
