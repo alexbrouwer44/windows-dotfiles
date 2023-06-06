@@ -441,7 +441,10 @@ use({
 })
 
 -- Improved syntax highlighting
+-- windows customizations for c compilers
+-- https://github.com/nvim-treesitter/nvim-treesitter/wiki/Windows-support
 use({
+
   'nvim-treesitter/nvim-treesitter',
   run = function()
     install = require('nvim-treesitter.install')
