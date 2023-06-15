@@ -41,7 +41,7 @@ vim.keymap.set('n', '<S-F7>', '<C-w><down>')
 
 -- Center cursor of page nav
 vim.keymap.set('n', '<C-k>', '<C-d>zz')
-vim.keymap.set('n', '<C-i>', '<C-u>zz')
+vim.keymap.set('n', '<C-j>', '<C-u>zz')
 
 -- Quickly clear search highlighting.
 vim.keymap.set('n', '<Leader>k', ':nohlsearch<CR>')

@@ -233,7 +233,7 @@ use({
     require('nvim-tree').setup({
 	  git = {
 		ignore = false,
-		timeout = 1000
+		timeout = 2000
 	  },
 	  view = {
 	    width = 70
@@ -450,7 +450,7 @@ use({
     install = require('nvim-treesitter.install')
     install.update({ with_sync = true })
     install.prefer_git = false
-    install.compilers = { "clang"}
+    install.compilers = { "zig" }
   end,
   requires = {
     'JoosepAlviste/nvim-ts-context-commentstring',
@@ -665,6 +665,16 @@ use({
 	  },
 	})
   end,
+})
+
+use({
+    "Pocco81/auto-save.nvim",
+    config = function()
+	     require("auto-save").setup {
+		    -- your config goes here
+		    -- or just leave it empty :)
+	     }
+    end,
 })
 
 if packer_bootstrap then
