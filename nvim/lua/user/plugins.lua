@@ -31,11 +31,97 @@ local use = pac.use
 -- Packer can manage itself.
 use('wbthomason/packer.nvim')
 
+-- Display buffers as tabs.
+use({
+  'akinsho/bufferline.nvim',
+  requires = 'kyazdani42/nvim-web-devicons',
+  config = function()
+    require('bufferline').setup({
+	  options = {
+		indicator = {
+		  icon = ' ',
+		},
+		show_close_icon = false,
+		tab_size = 0,
+		max_name_length = 25,
+		offsets = {
+		  {
+			filetype = 'NvimTree',
+			text = '  Files',
+			highlight = 'StatusLine',
+			text_align = 'left',
+		  },
+		},
+		separator_style = 'slant',
+		modified_icon = '',
+		custom_areas = {
+		  left = function()
+			return {
+			  { text = '    ', fg = '#8fff6d' },
+			}
+		  end,
+		},
+	  },
+	  highlights = {
+		fill = {
+		  bg = { attribute = 'bg', highlight = 'StatusLine' },
+		},
+		background = {
+		  bg = { attribute = 'bg', highlight = 'StatusLine' },
+		},
+		tab = {
+		  bg = { attribute = 'bg', highlight = 'StatusLine' },
+		},
+		tab_close = {
+		  bg = { attribute = 'bg', highlight = 'StatusLine' },
+		},
+		close_button = {
+		  bg = { attribute = 'bg', highlight = 'StatusLine' },
+		  fg = { attribute = 'fg', highlight = 'StatusLineNonText' },
+		},
+		close_button_visible = {
+		  bg = { attribute = 'bg', highlight = 'StatusLine' },
+		  fg = { attribute = 'fg', highlight = 'StatusLineNonText' },
+		},
+		close_button_selected = {
+		  fg = { attribute = 'fg', highlight = 'StatusLineNonText' },
+		},
+		buffer_visible = {
+		  bg = { attribute = 'bg', highlight = 'StatusLine' },
+		},
+		modified = {
+		  bg = { attribute = 'bg', highlight = 'StatusLine' },
+		},
+		modified_visible = {
+		  bg = { attribute = 'bg', highlight = 'StatusLine' },
+		},
+		duplicate = {
+		  bg = { attribute = 'bg', highlight = 'StatusLine' },
+		},
+		duplicate_visible = {
+		  bg = { attribute = 'bg', highlight = 'StatusLine' },
+		},
+		separator = {
+		  fg = { attribute = 'bg', highlight = 'StatusLine' },
+		  bg = { attribute = 'bg', highlight = 'StatusLine' },
+		},
+		separator_selected = {
+		  fg = { attribute = 'bg', highlight = 'StatusLine' },
+		  bg = { attribute = 'bg', highlight = 'Normal' }
+		},
+		separator_visible = {
+		  fg = { attribute = 'bg', highlight = 'StatusLine' },
+		  bg = { attribute = 'bg', highlight = 'StatusLine' },
+		},
+	  },
+	})
+  end,
+})
 -- One Dark theme.
 use({
-  'jessarcher/onedark.nvim',
+  'projekt0n/github-nvim-theme',
   config = function()
-    vim.cmd('colorscheme onedark')
+    vim.cmd('colorscheme github_dark')
 
     vim.api.nvim_set_hl(0, 'FloatBorder', {
       fg = vim.api.nvim_get_hl_by_name('NormalFloat', true).background,
@@ -174,8 +260,8 @@ use({
 	  highlight link TelescopePromptBorder FloatBorder
 	  highlight link TelescopeNormal CursorLine
 	  highlight link TelescopeBorder CursorLineBg
+	  highlight link TelescopeSelection Visual
 	]])
-
 	require('telescope').setup({
 	  defaults = {
 		path_display = { truncate = 1 },
@@ -310,93 +396,6 @@ use({
   end,
 })
 
--- Display buffers as tabs.
-use({
-  'akinsho/bufferline.nvim',
-  requires = 'kyazdani42/nvim-web-devicons',
-  after = 'onedark.nvim',
-  config = function()
-    require('bufferline').setup({
-	  options = {
-		indicator = {
-		  icon = ' ',
-		},
-		show_close_icon = false,
-		tab_size = 0,
-		max_name_length = 25,
-		offsets = {
-		  {
-			filetype = 'NvimTree',
-			text = '  Files',
-			highlight = 'StatusLine',
-			text_align = 'left',
-		  },
-		},
-		separator_style = 'slant',
-		modified_icon = '',
-		custom_areas = {
-		  left = function()
-			return {
-			  { text = '    ', fg = '#8fff6d' },
-			}
-		  end,
-		},
-	  },
-	  highlights = {
-		fill = {
-		  bg = { attribute = 'bg', highlight = 'StatusLine' },
-		},
-		background = {
-		  bg = { attribute = 'bg', highlight = 'StatusLine' },
-		},
-		tab = {
-		  bg = { attribute = 'bg', highlight = 'StatusLine' },
-		},
-		tab_close = {
-		  bg = { attribute = 'bg', highlight = 'StatusLine' },
-		},
-		close_button = {
-		  bg = { attribute = 'bg', highlight = 'StatusLine' },
-		  fg = { attribute = 'fg', highlight = 'StatusLineNonText' },
-		},
-		close_button_visible = {
-		  bg = { attribute = 'bg', highlight = 'StatusLine' },
-		  fg = { attribute = 'fg', highlight = 'StatusLineNonText' },
-		},
-		close_button_selected = {
-		  fg = { attribute = 'fg', highlight = 'StatusLineNonText' },
-		},
-		buffer_visible = {
-		  bg = { attribute = 'bg', highlight = 'StatusLine' },
-		},
-		modified = {
-		  bg = { attribute = 'bg', highlight = 'StatusLine' },
-		},
-		modified_visible = {
-		  bg = { attribute = 'bg', highlight = 'StatusLine' },
-		},
-		duplicate = {
-		  bg = { attribute = 'bg', highlight = 'StatusLine' },
-		},
-		duplicate_visible = {
-		  bg = { attribute = 'bg', highlight = 'StatusLine' },
-		},
-		separator = {
-		  fg = { attribute = 'bg', highlight = 'StatusLine' },
-		  bg = { attribute = 'bg', highlight = 'StatusLine' },
-		},
-		separator_selected = {
-		  fg = { attribute = 'bg', highlight = 'StatusLine' },
-		  bg = { attribute = 'bg', highlight = 'Normal' }
-		},
-		separator_visible = {
-		  fg = { attribute = 'bg', highlight = 'StatusLine' },
-		  bg = { attribute = 'bg', highlight = 'StatusLine' },
-		},
-	  },
-	})
-  end,
-})
 
 -- Display indentation lines.
 use({

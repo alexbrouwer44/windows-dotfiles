@@ -33,6 +33,9 @@ vim.keymap.set('v', '<F6>', '_')
 -- delete file and close buffer command
 vim.api.nvim_create_user_command('FDelete', ':call delete(expand(\'%\')) | bdelete', {})
 
+-- delete file and close buffer command
+vim.api.nvim_create_user_command('Keep', ':%bd | e#', {})
+
 -- Pane nav
 vim.keymap.set('n', '<S-F9>', '<C-w><right>')
 vim.keymap.set('n', '<S-F6>', '<C-w><left>')
