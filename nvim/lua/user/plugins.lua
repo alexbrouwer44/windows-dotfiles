@@ -541,7 +541,6 @@ use({
 	      return utils.root_has_file({ '.eslintrc.js' })
 	    end,
 	  }),
-	  require('null-ls').builtins.formatting.prettierd,
 	  require('null-ls').builtins.diagnostics.cspell,
 	  require('null-ls').builtins.code_actions.cspell,
 	},
