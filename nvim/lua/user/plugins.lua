@@ -512,10 +512,13 @@ use({
 	-- Enable "Take Over Mode" where volar will provide all JS/TS LSP services
 	-- This drastically improves the responsiveness of diagnostic updates on change
 	filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+	 on_attach = function(client)
+	    client.server_capabilities.document_formatting = false
+	  end,
       })
 
       -- Tailwind CSS
-      require('lspconfig').tailwindcss.setup({ capabilities = capabilities })
+      -- require('lspconfig').tailwindcss.setup({ capabilities = capabilities })
 
       -- JSON
       require('lspconfig').jsonls.setup({
@@ -527,22 +530,19 @@ use({
 	},
       })
 
-      -- null-ls
-      require('null-ls').setup({
+      local null_ls = require('null-ls')
+      null_ls.setup({
 	sources = {
 	  require('null-ls').builtins.diagnostics.eslint_d.with({
 	    condition = function(utils)
 	      return utils.root_has_file({ '.eslintrc.js' })
-	    end,
-	  }),
+	    end, }),
 	  require('null-ls').builtins.diagnostics.trail_space.with({ disabled_filetypes = { 'NvimTree' } }),
-	  require('null-ls').builtins.formatting.eslint_d.with({
-	    condition = function(utils)
-	      return utils.root_has_file({ '.eslintrc.js' })
-	    end,
-	  }),
 	  require('null-ls').builtins.diagnostics.cspell,
 	  require('null-ls').builtins.code_actions.cspell,
+	  require('null-ls').builtins.formatting.prettier.with({
+	   extra_args = {"--tab-width", "4", "--single-attribute-per-line", "true"}
+	 }),
 	},
       })
 
@@ -589,7 +589,7 @@ use({
 	end, opts)
 	vim.keymap.set({ 'n', 'v' }, '<Leader>ca', vim.lsp.buf.code_action, opts)
 	vim.keymap.set('n', '<F10>', function()
-	  vim.lsp.buf.format { async = true }
+	  vim.lsp.buf.format { timeout_ms = 5000 }
 	end, opts)
       end,
     })
