@@ -149,6 +149,7 @@ use({
     vim.api.nvim_set_hl(0, 'IndentBlanklineChar', { fg = '#2F313C' })
   end,
 })
+
 -- Commenting support.
 use('tpope/vim-commentary')
 
@@ -541,7 +542,7 @@ use({
 	  require('null-ls').builtins.diagnostics.cspell,
 	  require('null-ls').builtins.code_actions.cspell,
 	  require('null-ls').builtins.formatting.prettier.with({
-	   extra_args = {"--tab-width", "4", "--single-attribute-per-line", "true"}
+	   extra_args = {"--tab-width", "4"}
 	 }),
 	},
       })

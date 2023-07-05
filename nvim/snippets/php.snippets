@@ -23,16 +23,16 @@ snippet testt "test method (prefix)"
 
 snippet mkfk "create fk in migration"
 	$$table->unsignedBigInteger('${1}');
-	$$table->index('${1}', '${2}_${1}');
-	$$table->foreign('${1}', '${2}_${1}')
+	$$table->index('${1}', 'index_${2}_${1}');
+	$$table->foreign('${1}', 'fk_${2}_${1}')
 		->references('id')
 		->on('${3}')
 		->onDelete('${4}');
 
 snippet mkfkstr "create fk in migration with string key"
 	$$table->string('${1}');
-	$$table->index('${1}', '${2}_${1}');
-	$$table->foreign('${1}', '${2}_${1}')
+	$$table->index('${1}', 'index_${2}_${1}');
+	$$table->foreign('${1}', 'fk_${2}_${1}')
 		->references('id')
 		->on('${3}')
 		->onDelete('${4}');
